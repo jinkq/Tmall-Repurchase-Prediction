@@ -79,8 +79,8 @@ public class FindHottestItemsAndPopularMerchants{
         sortItemsPopularityJob.setOutputKeyClass(Text.class);
         sortItemsPopularityJob.setOutputValueClass(NullWritable.class);
 
-        FileInputFormat.addInputPath(sortItemsPopularityJob, tempDir); 
-        sortItemsPopularityJob.setInputFormatClass(SequenceFileInputFormat.class);  
+        FileInputFormat.addInputPath(sortItemsPopularityJob, new Path(inputPath)); 
+        // sortItemsPopularityJob.setInputFormatClass(SequenceFileInputFormat.class);  
 
         //delete existed output dir
         FileSystem fileSystem = outputPathPath.getFileSystem(conf);
@@ -91,6 +91,26 @@ public class FindHottestItemsAndPopularMerchants{
         // FileOutputFormat.setOutputPath(sortItemsPopularityJob, outputPathPath);
 
         sortItemsPopularityJob.waitForCompletion(true);
+    }
+
+    public void mergeTableJob( ) throws Exception {
+        Job mergeTableJob= new Job();
+        mergeTableJob.setJobName("mergeTableJob" );
+       mergeTableJob.setJarByClass(FindPopularMerchantsAmongYoung.class);
+        mergeTableJob.setMapperClass(FindPopularMerchantsAmongYoung.MergeTableMapper.class);
+        mergeTableJob.setMapOutputKeyClass(IntWritable.class);
+        mergeTableJob.setMapOutputValueClass(Text.class);
+        
+        mergeTableJob.setReducerClass(FindPopularMerchantsAmongYoung.MergeTableReducer.class);
+        mergeTableJob.setOutputKeyClass(Text.class);
+        mergeTableJob.setOutputValueClass(NullWritable.class);
+
+        FileInputFormat.addInputPath(mergeTableJob, tempDir); 
+
+        FileOutputFormat.setOutputPath(mergeTableJob, new Path(outputPath+"/popular merchants among young"));
+        // FileOutputFormat.setOutputPath(sortItemsPopularityJob, outputPathPath);
+
+        mergeTableJob.waitForCompletion(true);
     }
 
     public static void main( String[] args ) throws Exception {
@@ -108,8 +128,10 @@ public class FindHottestItemsAndPopularMerchants{
         }
         FindHottestItemsAndPopularMerchants driver = new FindHottestItemsAndPopularMerchants(otherArgs.get(0), otherArgs.get(1), conf);
         
-        driver.measureItemsPopularityJob();
-        driver.sortItemsPopularityJob();
+        // driver.measureItemsPopularityJob();
+        // driver.sortItemsPopularityJob();
+
+        driver.mergeTableJob();
 
         FileSystem.get(conf).deleteOnExit(driver.tempDir);
     }
