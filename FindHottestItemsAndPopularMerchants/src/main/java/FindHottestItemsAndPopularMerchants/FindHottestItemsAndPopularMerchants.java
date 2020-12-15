@@ -98,16 +98,20 @@ public class FindHottestItemsAndPopularMerchants{
         mergeTableJob.setJobName("mergeTableJob" );
        mergeTableJob.setJarByClass(FindPopularMerchantsAmongYoung.class);
         mergeTableJob.setMapperClass(FindPopularMerchantsAmongYoung.MergeTableMapper.class);
-        mergeTableJob.setMapOutputKeyClass(IntWritable.class);
-        mergeTableJob.setMapOutputValueClass(Text.class);
+        // mergeTableJob.setMapOutputKeyClass(IntWritable.class);
+        // mergeTableJob.setMapOutputValueClass(Text.class);
         
         mergeTableJob.setReducerClass(FindPopularMerchantsAmongYoung.MergeTableReducer.class);
         mergeTableJob.setOutputKeyClass(Text.class);
         mergeTableJob.setOutputValueClass(NullWritable.class);
 
-        FileInputFormat.addInputPath(mergeTableJob, tempDir); 
+        FileSystem fileSystem = tempDir.getFileSystem(conf);
+        if (fileSystem.exists(tempDir)) {
+            fileSystem.delete(tempDir, true);
+        }
+        FileInputFormat.addInputPath(mergeTableJob, new Path(inputPath)); 
 
-        FileOutputFormat.setOutputPath(mergeTableJob, new Path(outputPath+"/popular merchants among young"));
+        FileOutputFormat.setOutputPath(mergeTableJob, tempDir);
         // FileOutputFormat.setOutputPath(sortItemsPopularityJob, outputPathPath);
 
         mergeTableJob.waitForCompletion(true);

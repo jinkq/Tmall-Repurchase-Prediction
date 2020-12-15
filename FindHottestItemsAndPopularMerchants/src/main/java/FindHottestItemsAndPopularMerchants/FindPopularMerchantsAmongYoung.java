@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
+import java.util.ArrayList;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.IntWritable;
@@ -48,49 +49,29 @@ public class FindPopularMerchantsAmongYoung{
     }
 
     public static class MergeTableReducer
-       extends Reducer<Text,UserLog,Text,UserLog> {
-        private IntWritable result = new IntWritable();
+       extends Reducer<Text,UserLog,Text,NullWritable> {
 
         @Override
         public void reduce(Text key, Iterable<UserLog> values,
                         Context context
                         ) throws IOException, InterruptedException {
             UserLog userLog = new UserLog();
+            List<String> sellers = new ArrayList<String>();
+            int i = 0;
             for (UserLog obj : values) {
-                userLog.setUserID(obj.getUserID);
-                userLog.setSellerID(obj.getSellserID);
-            }
-            result.set(sum);
-            context.write(key, result);
-        }
-    }
-
-    public static class IntWritableDecreasingComparator extends IntWritable.Comparator {  
-        public int compare(WritableComparable a, WritableComparable b) {  
-            return -super.compare(a, b);  
-        }  
-
-        public int compare(byte[] b1, int s1, int l1, byte[] b2, int s2, int l2) {  
-            return -super.compare(b1, s1, l1, b2, s2, l2);  
-        }  
-    }
-
-    public static class SortReducer extends Reducer<IntWritable, Text, Text, NullWritable>{
-        private Text result = new Text();
-        int rank=1;
-
-        @Override
-        public void reduce(IntWritable key, Iterable<Text> values, Context context) 
-        throws IOException, InterruptedException{
-            for(Text val: values){
-                if(rank > 100){
-                    break;
+                if(i == 0)
+                {
+                    userLog.setUserID(obj.getUserID);
                 }
-                result.set(val.toString());
-                String str="rank "+rank+": item_id="+result+", 添加购物⻋+购买+添加收藏夹="+key;
-                rank++;
-                context.write(new Text(str),NullWritable.get());
+                if(obj.getSellserID){
+                    userLog.setSellerID(obj.getSellserID);
+                    sellers.add(obj.getSellserID);
+                }
+                i++;
+            }
+            for(String seller:sellers){
+                context.write(new Text(seller), NullWritable.get());
             }
         }
-  }
+    }
 }    
