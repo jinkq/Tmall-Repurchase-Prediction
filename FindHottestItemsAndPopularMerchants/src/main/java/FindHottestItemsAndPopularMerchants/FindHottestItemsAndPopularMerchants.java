@@ -1,4 +1,4 @@
-// package RepurchasePrediction;
+package FindHottestItemsAndPopularMerchants;
 
 
 import java.io.BufferedReader;
@@ -96,21 +96,22 @@ public class FindHottestItemsAndPopularMerchants{
     public void mergeTableJob( ) throws Exception {
         Job mergeTableJob= new Job();
         mergeTableJob.setJobName("mergeTableJob" );
-       mergeTableJob.setJarByClass(FindPopularMerchantsAmongYoung.class);
+        mergeTableJob.setJarByClass(FindPopularMerchantsAmongYoung.class);
         mergeTableJob.setMapperClass(FindPopularMerchantsAmongYoung.MergeTableMapper.class);
-        // mergeTableJob.setMapOutputKeyClass(IntWritable.class);
-        // mergeTableJob.setMapOutputValueClass(Text.class);
+        mergeTableJob.setMapOutputKeyClass(Text.class);
+        mergeTableJob.setMapOutputValueClass(UserLog.class);
         
         mergeTableJob.setReducerClass(FindPopularMerchantsAmongYoung.MergeTableReducer.class);
         mergeTableJob.setOutputKeyClass(Text.class);
         mergeTableJob.setOutputValueClass(NullWritable.class);
 
+        FileInputFormat.addInputPath(mergeTableJob, new Path(inputPath)); 
+
         FileSystem fileSystem = tempDir.getFileSystem(conf);
         if (fileSystem.exists(tempDir)) {
             fileSystem.delete(tempDir, true);
         }
-        FileInputFormat.addInputPath(mergeTableJob, new Path(inputPath)); 
-
+        
         FileOutputFormat.setOutputPath(mergeTableJob, tempDir);
         // FileOutputFormat.setOutputPath(sortItemsPopularityJob, outputPathPath);
 
@@ -137,6 +138,6 @@ public class FindHottestItemsAndPopularMerchants{
 
         driver.mergeTableJob();
 
-        FileSystem.get(conf).deleteOnExit(driver.tempDir);
+        // FileSystem.get(conf).deleteOnExit(driver.tempDir);
     }
 }

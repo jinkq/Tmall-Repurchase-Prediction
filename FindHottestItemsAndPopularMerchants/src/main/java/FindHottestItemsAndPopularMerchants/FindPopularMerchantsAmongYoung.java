@@ -1,4 +1,4 @@
-// package RepurchasePrediction;
+package FindHottestItemsAndPopularMerchants;
 
 
 import java.io.BufferedReader;
@@ -17,7 +17,6 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.util.StringUtils;
 import org.apache.hadoop.io.WritableComparable;
 
-import UserLog;
 
 public class FindPopularMerchantsAmongYoung{
     public static class MergeTableMapper
@@ -28,21 +27,21 @@ public class FindPopularMerchantsAmongYoung{
                     ) throws IOException, InterruptedException {
             String[] line = value.toString().split(",");
             UserLog userLog = new UserLog();
-            if(!line[0].equals("user_id"){
+            if(!line[0].equals("user_id")){
                 String userID = line[0];
-            }
-            
-            if(line.length==7){//user log
-                if(!(line[0].equals("user_id")) && !(line[3].equals("seller_id") ) && !(line[6].equals("0") )){
-                    userLog.setUserID(line[0]);
-                    userLog.setSellerID(line[3]);
-                    context.write(new Text(userID), userLog);
+
+                if(line.length==7){//user log
+                    if(!(line[0].equals("user_id")) && !(line[3].equals("seller_id") ) && !(line[6].equals("0") )){
+                        userLog.setUserID(line[0]);
+                        userLog.setSellerID(line[3]);
+                        context.write(new Text(userID), userLog);
+                    }
                 }
-            }
-            else if(line.length==3){//user info
-                if(!(line[0].equals("user_id")) &&  (line[1].equals("1") || line[1].equals("2") || line[1].equals("3")) ){
-                    userLog.setUserID(line[0]);
-                    context.write(new Text(userID), userLog);
+                else if(line.length==3){//user info
+                    if(!(line[0].equals("user_id")) &&  (line[1].equals("1") || line[1].equals("2") || line[1].equals("3")) ){
+                        userLog.setUserIDAge(line[0]);
+                        context.write(new Text(userID), userLog);
+                    }
                 }
             }
         }
@@ -57,17 +56,11 @@ public class FindPopularMerchantsAmongYoung{
                         ) throws IOException, InterruptedException {
             UserLog userLog = new UserLog();
             List<String> sellers = new ArrayList<String>();
-            int i = 0;
+            
             for (UserLog obj : values) {
-                if(i == 0)
-                {
-                    userLog.setUserID(obj.getUserID);
+                if(obj.getSellerID().length() > 0 && obj.getUserIDAge().length() > 0){
+                    sellers.add(obj.getSellerID());
                 }
-                if(obj.getSellserID){
-                    userLog.setSellerID(obj.getSellserID);
-                    sellers.add(obj.getSellserID);
-                }
-                i++;
             }
             for(String seller:sellers){
                 context.write(new Text(seller), NullWritable.get());
