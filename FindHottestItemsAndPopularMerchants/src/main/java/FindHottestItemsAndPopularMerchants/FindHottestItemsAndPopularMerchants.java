@@ -33,9 +33,7 @@ public class FindHottestItemsAndPopularMerchants{
 	private String outputPath;
 	private Configuration conf;
     private Path outputPathPath; //Path type
-    private Path tempDir;
-
-    // public class MyInverseMapper extends InverseMapper<Text, IntWritable, IntWritable, Text>
+    private Path tempDir, tempDir2;
 
     public FindHottestItemsAndPopularMerchants(String inputPath, String outputPath, Configuration conf){
 		this.inputPath = inputPath;
@@ -43,6 +41,7 @@ public class FindHottestItemsAndPopularMerchants{
 		this.conf = conf;
         this.outputPathPath = new Path(outputPath);
         this.tempDir = new Path("tmp-" + Integer.toString(new Random().nextInt(Integer.MAX_VALUE)));
+        this.tempDir2 = new Path("temp-" + Integer.toString(new Random().nextInt(Integer.MAX_VALUE)));
 	}
     
     public void measureItemsPopularityJob( ) throws Exception {
@@ -54,7 +53,7 @@ public class FindHottestItemsAndPopularMerchants{
         measureItemsPopularityJob.setOutputKeyClass(Text.class);
         measureItemsPopularityJob.setOutputValueClass(IntWritable.class);
 
-        FileInputFormat.addInputPath(measureItemsPopularityJob, new Path(inputPath));
+        FileInputFormat.addInputPath(measureItemsPopularityJob, new Path(inputPath+"/user_log_format1.csv"));
         
         FileSystem fileSystem = tempDir.getFileSystem(conf);
         if (fileSystem.exists(tempDir)) {
@@ -79,8 +78,8 @@ public class FindHottestItemsAndPopularMerchants{
         sortItemsPopularityJob.setOutputKeyClass(Text.class);
         sortItemsPopularityJob.setOutputValueClass(NullWritable.class);
 
-        FileInputFormat.addInputPath(sortItemsPopularityJob, new Path(inputPath)); 
-        // sortItemsPopularityJob.setInputFormatClass(SequenceFileInputFormat.class);  
+        FileInputFormat.addInputPath(sortItemsPopularityJob, tempDir); 
+        sortItemsPopularityJob.setInputFormatClass(SequenceFileInputFormat.class);  
 
         //delete existed output dir
         FileSystem fileSystem = outputPathPath.getFileSystem(conf);
@@ -88,7 +87,6 @@ public class FindHottestItemsAndPopularMerchants{
             fileSystem.delete(outputPathPath, true);
         }
         FileOutputFormat.setOutputPath(sortItemsPopularityJob, new Path(outputPath+"/hottest items"));
-        // FileOutputFormat.setOutputPath(sortItemsPopularityJob, outputPathPath);
 
         sortItemsPopularityJob.waitForCompletion(true);
     }
@@ -113,9 +111,51 @@ public class FindHottestItemsAndPopularMerchants{
         }
         
         FileOutputFormat.setOutputPath(mergeTableJob, tempDir);
-        // FileOutputFormat.setOutputPath(sortItemsPopularityJob, outputPathPath);
 
         mergeTableJob.waitForCompletion(true);
+    }
+
+    public void measureMerchantsPopularityJob( ) throws Exception {
+        Job measureMerchantsPopularityJob= new Job();
+        measureMerchantsPopularityJob.setJobName("measureMerchantsPopularityJob" );
+        measureMerchantsPopularityJob.setJarByClass(FindPopularMerchantsAmongYoung.class);
+        measureMerchantsPopularityJob.setMapperClass(FindPopularMerchantsAmongYoung.MeasureMerchantsPopularityMapper.class);
+        measureMerchantsPopularityJob.setMapOutputKeyClass(Text.class);
+        measureMerchantsPopularityJob.setMapOutputValueClass(IntWritable.class);
+        
+        measureMerchantsPopularityJob.setReducerClass(FindHottestItems.IntSumReducer.class);
+        measureMerchantsPopularityJob.setOutputKeyClass(Text.class);
+        measureMerchantsPopularityJob.setOutputValueClass(IntWritable.class);
+
+        FileInputFormat.addInputPath(measureMerchantsPopularityJob, tempDir); 
+        // sortItemsPopularityJob.setInputFormatClass(SequenceFileInputFormat.class);  
+
+        
+        FileOutputFormat.setOutputPath(measureMerchantsPopularityJob, tempDir2);
+        measureMerchantsPopularityJob.setOutputFormatClass(SequenceFileOutputFormat.class);
+
+        measureMerchantsPopularityJob.waitForCompletion(true);
+    }
+
+    public void sortMerchantsPopularityJob( ) throws Exception {
+        Job sortMerchantsPopularityJob= new Job();
+        sortMerchantsPopularityJob.setJobName("sortMerchantsPopularityJob" );
+        sortMerchantsPopularityJob.setJarByClass(FindPopularMerchantsAmongYoung.class);
+        sortMerchantsPopularityJob.setSortComparatorClass(FindHottestItems.IntWritableDecreasingComparator.class);  //排序改写成降序
+        sortMerchantsPopularityJob.setMapperClass(InverseMapper.class);
+        sortMerchantsPopularityJob.setMapOutputKeyClass(IntWritable.class);
+        sortMerchantsPopularityJob.setMapOutputValueClass(Text.class);
+        
+        sortMerchantsPopularityJob.setReducerClass(FindPopularMerchantsAmongYoung.SortReducer.class);
+        sortMerchantsPopularityJob.setOutputKeyClass(Text.class);
+        sortMerchantsPopularityJob.setOutputValueClass(NullWritable.class);
+
+        FileInputFormat.addInputPath(sortMerchantsPopularityJob, tempDir2); 
+        sortMerchantsPopularityJob.setInputFormatClass(SequenceFileInputFormat.class);  
+
+        FileOutputFormat.setOutputPath(sortMerchantsPopularityJob, new Path(outputPath+"/popular merchants among young"));
+
+        sortMerchantsPopularityJob.waitForCompletion(true);
     }
 
     public static void main( String[] args ) throws Exception {
@@ -131,13 +171,19 @@ public class FindHottestItemsAndPopularMerchants{
         for (int i=0; i < remainingArgs.length; ++i) {
             otherArgs.add(remainingArgs[i]);
         }
+
         FindHottestItemsAndPopularMerchants driver = new FindHottestItemsAndPopularMerchants(otherArgs.get(0), otherArgs.get(1), conf);
         
-        // driver.measureItemsPopularityJob();
-        // driver.sortItemsPopularityJob();
+        //最热门商品
+        driver.measureItemsPopularityJob();
+        driver.sortItemsPopularityJob();
 
+        //最受年轻人关注的商家
         driver.mergeTableJob();
+        driver.measureMerchantsPopularityJob();
+        driver.sortMerchantsPopularityJob();
 
-        // FileSystem.get(conf).deleteOnExit(driver.tempDir);
+        FileSystem.get(conf).deleteOnExit(driver.tempDir);
+        FileSystem.get(conf).deleteOnExit(driver.tempDir2);
     }
 }

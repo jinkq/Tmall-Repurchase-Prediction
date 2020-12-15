@@ -75,5 +75,5 @@ public class FindHottestItems{
                 context.write(new Text(str),NullWritable.get());
             }
         }
-  }
+    }
 }    

@@ -32,14 +32,13 @@ public class FindPopularMerchantsAmongYoung{
 
                 if(line.length==7){//user log
                     if(!(line[0].equals("user_id")) && !(line[3].equals("seller_id")) && !(line[6].equals("0") )){
-                        userLog.setUserID(line[0]);
                         userLog.setSellerID(line[3]);
                         context.write(new Text(userID), userLog);
                     }
                 }
                 else if(line.length==3){//user info
                     if(!(line[0].equals("user_id")) &&  (line[1].equals("1") || line[1].equals("2") || line[1].equals("3")) ){
-                        userLog.setUserIDAge(line[0]);
+                        userLog.setUserAge(true);
                         context.write(new Text(userID), userLog);
                     }
                 }
@@ -64,7 +63,7 @@ public class FindPopularMerchantsAmongYoung{
                     buy = true;
                     sellers.add(obj.getSellerID());
                 }
-                else if(obj.getUserIDAge().length() > 0){
+                else if(obj.getUserAge()){
                     age = true;
                 }
             }
@@ -73,6 +72,37 @@ public class FindPopularMerchantsAmongYoung{
                 for(String seller:sellers){
                     context.write(new Text(seller), NullWritable.get());
                 }
+            }
+        }
+    }
+
+    public static class MeasureMerchantsPopularityMapper
+       extends Mapper<Object, Text, Text, IntWritable>{
+
+        private final static IntWritable one = new IntWritable(1);
+
+        @Override
+        public void map(Object key, Text value, Context context
+                    ) throws IOException, InterruptedException {
+            context.write(value, one);
+        }
+    }
+
+    public static class SortReducer extends Reducer<IntWritable, Text, Text, NullWritable>{
+        private Text result = new Text();
+        int rank=1;
+
+        @Override
+        public void reduce(IntWritable key, Iterable<Text> values, Context context) 
+        throws IOException, InterruptedException{
+            for(Text val: values){
+                if(rank > 100){
+                    break;
+                }
+                result.set(val.toString());
+                String str="rank "+rank+": seller_id="+result+", 添加购物⻋+购买+添加收藏夹="+key;
+                rank++;
+                context.write(new Text(str),NullWritable.get());
             }
         }
     }
