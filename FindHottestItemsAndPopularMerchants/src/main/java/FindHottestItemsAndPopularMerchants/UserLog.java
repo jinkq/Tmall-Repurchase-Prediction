@@ -16,7 +16,7 @@ public class UserLog implements Writable{
         this.userIDAge = "";
     }
 
-    public UserLog(String userID,  String sellerID, String userIDAge) {
+    public UserLog(String userID, String sellerID, String userIDAge) {
         this.userID = userID;
         this.sellerID = sellerID;
         this.userIDAge = userIDAge;

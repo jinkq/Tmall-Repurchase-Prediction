@@ -31,7 +31,7 @@ public class FindPopularMerchantsAmongYoung{
                 String userID = line[0];
 
                 if(line.length==7){//user log
-                    if(!(line[0].equals("user_id")) && !(line[3].equals("seller_id") ) && !(line[6].equals("0") )){
+                    if(!(line[0].equals("user_id")) && !(line[3].equals("seller_id")) && !(line[6].equals("0") )){
                         userLog.setUserID(line[0]);
                         userLog.setSellerID(line[3]);
                         context.write(new Text(userID), userLog);
@@ -56,14 +56,23 @@ public class FindPopularMerchantsAmongYoung{
                         ) throws IOException, InterruptedException {
             UserLog userLog = new UserLog();
             List<String> sellers = new ArrayList<String>();
+            Boolean buy = false;
+            Boolean age = false;
             
             for (UserLog obj : values) {
-                if(obj.getSellerID().length() > 0 && obj.getUserIDAge().length() > 0){
+                if(obj.getSellerID().length() > 0){
+                    buy = true;
                     sellers.add(obj.getSellerID());
                 }
+                else if(obj.getUserIDAge().length() > 0){
+                    age = true;
+                }
             }
-            for(String seller:sellers){
-                context.write(new Text(seller), NullWritable.get());
+
+            if(buy && age){
+                for(String seller:sellers){
+                    context.write(new Text(seller), NullWritable.get());
+                }
             }
         }
     }
