@@ -1,0 +1,4 @@
+[0m[[0m[31merror[0m] [0m[0m/workspace/Tmall-Repurchase-Prediction/FindHottestItemsAndPopularMerchants/Spark/src/main/scala/ScalaWordCount.scala:14:37: value split is not a member of org.apache.spark.rdd.RDD[String][0m
+[0m[[0m[31merror[0m] [0m[0m    val line = sc.textFile(args(0)).split(" ")(1)[0m
+[0m[[0m[31merror[0m] [0m[0m                                    ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

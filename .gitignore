@@ -1,2 +1,2 @@
-FindHottestItemsAndPopularMerchants/target/*
-!FindHottestItemsAndPopularMerchants/target/*.jar
+FindHottestItemsAndPopularMerchants/MapReduce/target/*
+!FindHottestItemsAndPopularMerchants/MapReduce/target/*.jar
