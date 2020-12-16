@@ -1,4 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/workspace/Tmall-Repurchase-Prediction/FindHottestItemsAndPopularMerchants/Spark/src/main/scala/ScalaWordCount.scala:14:37: value split is not a member of org.apache.spark.rdd.RDD[String][0m
-[0m[[0m[31merror[0m] [0m[0m    val line = sc.textFile(args(0)).split(" ")(1)[0m
-[0m[[0m[31merror[0m] [0m[0m                                    ^[0m
+[0m[[0m[31merror[0m] [0m[0m/workspace/Tmall-Repurchase-Prediction/FindHottestItemsAndPopularMerchants/Spark/src/main/scala/ScalaWordCount.scala:17:22: org.apache.spark.rdd.RDD[String] does not take parameters[0m
+[0m[[0m[31merror[0m] [0m[0m    val counts = line(0).flatMap(_.split(",")).map((_, 1)).reduceByKey(_+_)[0m
+[0m[[0m[31merror[0m] [0m[0m                     ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m
