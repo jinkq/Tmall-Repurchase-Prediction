@@ -20,8 +20,8 @@
     2. 在Reducer中，检测同一user_id的一系列UserLog对象，
         * 若对象的`sellerId`属性不为空字符串，则认定该user买了商品，并将该sellerId加入列表`sellers`；
         * 若对象的`userAge`属性为true，则认定该user为年轻人。
-        
-    遍历完所有UserLog对象，若该user既买了商品，又是年轻人，则将列表`sellers`中的每一个seller的ID作为key输出，即输出<key, value>=<seller_id, NullWritable>，删除原有的tempDir，并将输出写入临时文件夹tempDir。
+
+        遍历完所有UserLog对象，若该user既买了商品，又是年轻人，则将列表`sellers`中的每一个seller的ID作为key输出，即输出<key, value>=<seller_id, NullWritable>，删除原有的tempDir，并将输出写入临时文件夹tempDir。
 3. 新建job`measureMerchantsPopularityJob`，读取tempDir中的数据，对每一行的seller_id进行计数，输出<key, value>=<seller_id, 出现次数>
 4. 新建job`sortMerchantsPopularityJob`，除了输出的文字，其他均与`sortItemsPopularityJob`相同
 ### Spark
