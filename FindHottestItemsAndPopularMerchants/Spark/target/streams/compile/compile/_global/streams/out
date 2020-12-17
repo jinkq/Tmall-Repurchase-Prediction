@@ -1,7 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/workspace/Tmall-Repurchase-Prediction/FindHottestItemsAndPopularMerchants/Spark/src/main/scala/FindHottestItems.scala:29:74: illegal start of simple expression[0m
-[0m[[0m[31merror[0m] [0m[0m    val itemPairs = line.map(line => action123(line)).map((_, 1)).filter(case (key, value) => key != "").reduceByKey(_+_)[0m
-[0m[[0m[31merror[0m] [0m[0m                                                                         ^[0m
-[0m[[0m[31merror[0m] [0m[0m/workspace/Tmall-Repurchase-Prediction/FindHottestItemsAndPopularMerchants/Spark/src/main/scala/FindHottestItems.scala:38:3: ')' expected but '}' found.[0m
-[0m[[0m[31merror[0m] [0m[0m  }[0m
-[0m[[0m[31merror[0m] [0m[0m  ^[0m
-[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
+[0m[[0m[31merror[0m] [0m[0m/workspace/Tmall-Repurchase-Prediction/FindHottestItemsAndPopularMerchants/Spark/src/main/scala/FindHottestItems.scala:33:84: not found: value Null[0m
+[0m[[0m[31merror[0m] [0m[0m    val formatedSortedItems = sortedItems.map{case (key, value) => (key+":"+value, Null)}[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                                   ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

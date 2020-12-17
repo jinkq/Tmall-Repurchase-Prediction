@@ -3,7 +3,7 @@ import org.apache.spark.SparkContext
 import org.apache.spark.SparkContext._
 
 
-object FindHottestItems {
+object FindPopularMerchantsAmongYoung {
   def action123(line: String): String = {
     val words = line.split(",")
     if(words(6) == "1" || words(6) == "2" || words(6) == "3"){ //添加购物⻋、购买、添加收藏夹
