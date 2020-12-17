@@ -1,4 +1,7 @@
-[0m[[0m[31merror[0m] [0m[0m/workspace/Tmall-Repurchase-Prediction/FindHottestItemsAndPopularMerchants/Spark/src/main/scala/ScalaWordCount.scala:18:59: value soryByKey is not a member of org.apache.spark.rdd.RDD[(Int, String)][0m
-[0m[[0m[31merror[0m] [0m[0m    val sortCounts = counts.map(line =>(line._2,line._1)).soryByKey(false)[0m
-[0m[[0m[31merror[0m] [0m[0m                                                          ^[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m
+[0m[[0m[31merror[0m] [0m[0m/workspace/Tmall-Repurchase-Prediction/FindHottestItemsAndPopularMerchants/Spark/src/main/scala/FindHottestItems.scala:29:74: illegal start of simple expression[0m
+[0m[[0m[31merror[0m] [0m[0m    val itemPairs = line.map(line => action123(line)).map((_, 1)).filter(case (key, value) => key != "").reduceByKey(_+_)[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                         ^[0m
+[0m[[0m[31merror[0m] [0m[0m/workspace/Tmall-Repurchase-Prediction/FindHottestItemsAndPopularMerchants/Spark/src/main/scala/FindHottestItems.scala:38:3: ')' expected but '}' found.[0m
+[0m[[0m[31merror[0m] [0m[0m  }[0m
+[0m[[0m[31merror[0m] [0m[0m  ^[0m
+[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
