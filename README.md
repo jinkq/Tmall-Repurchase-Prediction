@@ -26,8 +26,8 @@
 4. 新建job`sortMerchantsPopularityJob`，除了输出的文字，其他均与`sortItemsPopularityJob`相同
 #### 运行方法
 `hadoop jar <FindHottestItemsAndPopularMerchants-1.0-SNAPSHOT.jar路径> <input> <output>`
-* <input>中含user_log_format1.csv和user_info_format1.csv
-* <output>将含文件夹hottest items和popular merchants among young，分别存储双十一最热门的商品和最受年轻人(age<30)关注的商家
+* \<input>中含user_log_format1.csv和user_info_format1.csv
+* \<output>将含文件夹hottest items和popular merchants among young，分别存储双十一最热门的商品和最受年轻人(age<30)关注的商家
 ### Spark
 
 
