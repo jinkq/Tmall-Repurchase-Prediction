@@ -2,11 +2,11 @@
 [toc]
 ## 任务目标
 1. 分别编写MapReduce程序和Spark程序统计双十一最热门的商品和最受年轻人(age<30)关注的商家（“添加购物⻋+购买+添加收藏夹”前100名）；
-2. 编写Spark程序统计双十一购买了商品的男女⽐例，以及购买了商品的买家年龄段的⽐例；
-3. 基于Hive或者Spark SQL查询双十一购买了商品的男女⽐例，以及购买了商品的买家年龄段的比例；
+2. 编写Spark程序统计双十一购买了商品的男女比例，以及购买了商品的买家年龄段的比例；
+3. 基于Hive或者Spark SQL查询双十一购买了商品的男女比例，以及购买了商品的买家年龄段的比例；
 4. 预测给定的商家中，哪些新消费者在未来会成为忠实客户，即需要预测这些新消费者在6个月内再次购买的概率。基于Spark MLlib编写程序预测回头客，评估实验结果的准确率。
 
-## 统计双十一最热⻔的商品和最受年轻人(age<30)关注的商家
+## 统计双十一最热门的商品和最受年轻人(age<30)关注的商家
 ### MapReduce
 #### 统计最热门商品
 1. 新建job`measureItemsPopularityJob`，读取数据文件`user_log_format1.csv`，对于数据文件中`action_type`为1、2或3的样本的`item_id`字段进行计数，输出<key, value>=<item_id, 出现次数>，保存至临时文件夹`tempDir`
@@ -24,8 +24,12 @@
         遍历完所有UserLog对象，若该user既买了商品，又是年轻人，则将列表`sellers`中的每一个seller的ID作为key输出，即输出<key, value>=<seller_id, NullWritable>，删除原有的tempDir，并将输出写入临时文件夹tempDir。
 3. 新建job`measureMerchantsPopularityJob`，读取tempDir中的数据，对每一行的seller_id进行计数，输出<key, value>=<seller_id, 出现次数>
 4. 新建job`sortMerchantsPopularityJob`，除了输出的文字，其他均与`sortItemsPopularityJob`相同
+#### 运行方法
+`hadoop jar <FindHottestItemsAndPopularMerchants-1.0-SNAPSHOT.jar路径> <input> <output>`
+* <input>中含user_log_format1.csv和user_info_format1.csv
+* <output>将含文件夹hottest items和popular merchants among young，分别存储双十一最热门的商品和最受年轻人(age<30)关注的商家
 ### Spark
-（“添加购物⻋+购买+添加收藏夹”前100名）
-hadoop jar /home/jkq/FBDP/Tmall\ repurchase\ prediction/RepurchasePrediction/target/RepurchasePrediction-1.0-SNAPSHOT.jar input output
 
+
+#### 运行方法
 spark-submit --class "ScalaWordCount" --master spark://jkq181098118-master:7077 target/scala-2.11/find-hottest-items-and-popular-merchants_2.11-1.0.jar hdfs://jkq181098118-master:9000/user/root/input_test/test.txt hdfs://jkq181098118-master:9000/user/root/output
