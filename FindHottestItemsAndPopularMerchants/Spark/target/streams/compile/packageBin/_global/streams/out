@@ -1,13 +1,15 @@
 [0m[[0m[0mdebug[0m] [0m[0mPackaging /workspace/Tmall-Repurchase-Prediction/FindHottestItemsAndPopularMerchants/Spark/target/scala-2.11/find-hottest-items-and-popular-merchants_2.11-1.0.jar ...[0m
 [0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
-[0m[[0m[0mdebug[0m] [0m[0m	ScalaWordCount$$anonfun$3.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /workspace/Tmall-Repurchase-Prediction/FindHottestItemsAndPopularMerchants/Spark/target/scala-2.11/classes/ScalaWordCount$$anonfun$3.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	ScalaWordCount$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /workspace/Tmall-Repurchase-Prediction/FindHottestItemsAndPopularMerchants/Spark/target/scala-2.11/classes/ScalaWordCount$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	ScalaWordCount$$anonfun$2.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /workspace/Tmall-Repurchase-Prediction/FindHottestItemsAndPopularMerchants/Spark/target/scala-2.11/classes/ScalaWordCount$$anonfun$2.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	ScalaWordCount$$anonfun$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /workspace/Tmall-Repurchase-Prediction/FindHottestItemsAndPopularMerchants/Spark/target/scala-2.11/classes/ScalaWordCount$$anonfun$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ScalaWordCount$$anonfun$2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /workspace/Tmall-Repurchase-Prediction/FindHottestItemsAndPopularMerchants/Spark/target/scala-2.11/classes/ScalaWordCount$$anonfun$2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ScalaWordCount$$anonfun$4.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /workspace/Tmall-Repurchase-Prediction/FindHottestItemsAndPopularMerchants/Spark/target/scala-2.11/classes/ScalaWordCount$$anonfun$4.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ScalaWordCount$$anonfun$3.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /workspace/Tmall-Repurchase-Prediction/FindHottestItemsAndPopularMerchants/Spark/target/scala-2.11/classes/ScalaWordCount$$anonfun$3.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	ScalaWordCount.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /workspace/Tmall-Repurchase-Prediction/FindHottestItemsAndPopularMerchants/Spark/target/scala-2.11/classes/ScalaWordCount.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ScalaWordCount$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /workspace/Tmall-Repurchase-Prediction/FindHottestItemsAndPopularMerchants/Spark/target/scala-2.11/classes/ScalaWordCount$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0mDone packaging.[0m
