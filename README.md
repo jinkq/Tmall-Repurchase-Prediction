@@ -32,8 +32,8 @@
 
 
 #### 运行方法
-spark-submit --class "ScalaWordCount" --master spark://jkq181098118-master:7077 target/scala-2.11/find-hottest-items-and-popular-merchants_2.11-1.0.jar hdfs://jkq181098118-master:9000/user/root/input_test/test.txt hdfs://jkq181098118-master:9000/user/root/output
+spark-submit --class "FindHottestItemsAndPopularMerchants" --master spark://jkq181098118-master:7077 target/scala-2.11/find-hottest-items-and-popular-merchants_2.11-1.0.jar hdfs://jkq181098118-master:9000/user/root/input_test/test.txt hdfs://jkq181098118-master:9000/user/root/output
 
-spark-submit --class "FindHottestItems" --master local target/scala-2.11/find-hottest-items-and-popular-merchants_2.11-1.0.jar input_test.txt output
+spark-submit --class "FindHottestItemsAndPopularMerchants" --master local target/scala-2.11/find-hottest-items-and-popular-merchants_2.11-1.0.jar input_test output
 
 ssh -N -f -L 30179:localhost:30179 root@210.28.133.13 -p 20576

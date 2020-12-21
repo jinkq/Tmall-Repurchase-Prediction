@@ -1,6 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/workspace/Tmall-Repurchase-Prediction/FindHottestItemsAndPopularMerchants/Spark/src/main/scala/FindHottestItems.scala:31:83: missing argument list for method + in class String[0m
-[0m[[0m[31merror[0m] [0m[0mUnapplied methods are only converted to functions when a function type is expected.[0m
-[0m[[0m[31merror[0m] [0m[0mYou can make this conversion explicit by writing `$plus _` or `$plus(_)` instead of `$plus`.[0m
-[0m[[0m[31merror[0m] [0m[0m    val formatedSortedItems = sortedItems.map{case (key, value) => ("item_id="+key+, "添加购物⻋+购买+添加收藏夹="+value)}[0m
-[0m[[0m[31merror[0m] [0m[0m                                                                                  ^[0m
+[0m[[0m[31merror[0m] [0m[0m/workspace/Tmall-Repurchase-Prediction/FindHottestItemsAndPopularMerchants/Spark/src/main/scala/FindHottestItemsAndPopularMerchants.scala:76:13: value saveAsTextFile is not a member of Unit[0m
+[0m[[0m[31merror[0m] [0m[0m    sellers.saveAsTextFile(args(1)+"/popular merchants among young")[0m
+[0m[[0m[31merror[0m] [0m[0m            ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m
