@@ -23,6 +23,9 @@ object FindHottestItems {
     val conf = new SparkConf().setAppName("FindHottestItems")
     val sc = new SparkContext(conf)
     val line = sc.textFile(args(0))
+
+    val infoItemPairs = line.filter(x => x.split(",").length==3)
+    val logItemPairs = line.filter(x => x.split(",").length==7)
     
     val itemPairs = line.map(line => action123(line)).map((_, 1)).filter{case (key, value) => key != ""}.reduceByKey(_+_)
     val sortedItemPairs = itemPairs.map(line =>(line._2,line._1)).sortByKey(false).map(line =>(line._2,line._1)).take(100)
