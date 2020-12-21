@@ -1,4 +1,6 @@
-[0m[[0m[31merror[0m] [0m[0m/workspace/Tmall-Repurchase-Prediction/FindHottestItemsAndPopularMerchants/Spark/src/main/scala/FindHottestItems.scala:33:84: not found: value Null[0m
-[0m[[0m[31merror[0m] [0m[0m    val formatedSortedItems = sortedItems.map{case (key, value) => (key+":"+value, Null)}[0m
-[0m[[0m[31merror[0m] [0m[0m                                                                                   ^[0m
+[0m[[0m[31merror[0m] [0m[0m/workspace/Tmall-Repurchase-Prediction/FindHottestItemsAndPopularMerchants/Spark/src/main/scala/FindHottestItems.scala:31:83: missing argument list for method + in class String[0m
+[0m[[0m[31merror[0m] [0m[0mUnapplied methods are only converted to functions when a function type is expected.[0m
+[0m[[0m[31merror[0m] [0m[0mYou can make this conversion explicit by writing `$plus _` or `$plus(_)` instead of `$plus`.[0m
+[0m[[0m[31merror[0m] [0m[0m    val formatedSortedItems = sortedItems.map{case (key, value) => ("item_id="+key+, "添加购物⻋+购买+添加收藏夹="+value)}[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                                  ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m

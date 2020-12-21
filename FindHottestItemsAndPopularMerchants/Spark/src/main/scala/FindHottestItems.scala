@@ -28,7 +28,7 @@ object FindHottestItems {
     val sortedItemPairs = itemPairs.map(line =>(line._2,line._1)).sortByKey(false).map(line =>(line._2,line._1)).take(100)
     
     val sortedItems = sc.parallelize(sortedItemPairs)//将数组转化为RDD
-    val formatedSortedItems = sortedItems.map{case (key, value) => ("item_id="+key+", 添加购物⻋+购买+添加收藏夹="+value, "")}
+    val formatedSortedItems = sortedItems.map{case (key, value) => ("item_id="+key, "添加购物⻋+购买+添加收藏夹="+value)}
   
     formatedSortedItems.saveAsTextFile(args(1))
 
