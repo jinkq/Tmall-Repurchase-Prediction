@@ -1,7 +1,6 @@
 import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkContext._
-import org.apache.spark.rdd._
 
 
 object FindHottestItemsAndPopularMerchants {
@@ -60,7 +59,7 @@ object FindHottestItemsAndPopularMerchants {
     //统计最受年轻人(age<30)关注的商家
     val youngUsers = info.map(info => getAgeUsers(info)).filter(user => user != "")
     val actionUserSellerPairs = log.map(log => getActionUserSellerPairs(log)).filter{case (key, value) => key != ""}
-    val youngActionUsers = youngUsers.intersection(actionUserSellerPairs.keys).distinct().map((_,"hh"))//符合actionType的年轻人
+    val youngActionUsers = youngUsers.intersection(actionUserSellerPairs.keys).distinct().map((_,1))//符合actionType的年轻人
 
     val sellerPairs = youngActionUsers.join(actionUserSellerPairs).map{case (key, value) => (value._2, 1)}.reduceByKey(_+_)
     val sortedSellerPairs = sellerPairs.map(sellerPair =>(sellerPair._2,sellerPair._1)).sortByKey(false).map(sellerPair =>(sellerPair._2,sellerPair._1)).take(100)
