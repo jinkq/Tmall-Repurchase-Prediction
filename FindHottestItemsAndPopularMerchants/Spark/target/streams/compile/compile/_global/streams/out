@@ -1,4 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/workspace/Tmall-Repurchase-Prediction/FindHottestItemsAndPopularMerchants/Spark/src/main/scala/FindHottestItemsAndPopularMerchants.scala:76:13: value saveAsTextFile is not a member of Unit[0m
-[0m[[0m[31merror[0m] [0m[0m    sellers.saveAsTextFile(args(1)+"/popular merchants among young")[0m
-[0m[[0m[31merror[0m] [0m[0m            ^[0m
+[0m[[0m[31merror[0m] [0m[0m/workspace/Tmall-Repurchase-Prediction/FindHottestItemsAndPopularMerchants/Spark/src/main/scala/FindHottestItemsAndPopularMerchants.scala:71:48: not found: value getActionUserSellerPairs[0m
+[0m[[0m[31merror[0m] [0m[0m    val actionUserSellerPairs = log.map(log => getActionUserSellerPairs(log)).filter{case (key, value) => key != ""}[0m
+[0m[[0m[31merror[0m] [0m[0m                                               ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m

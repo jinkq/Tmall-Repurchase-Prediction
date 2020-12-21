@@ -18,7 +18,7 @@ object FindHottestItemsAndPopularMerchants {
   def getActionUserSellerPairs(line: String): (String, String) = { //获得action_type符合要求的(user, seller)
     val words = line.split(",")
     if(words(6) == "1" || words(6) == "2" || words(6) == "3"){ //添加购物⻋、购买、添加收藏夹
-      return (words(0), words(1))
+      return (words(0), words(3))
     }
     else{
       return ("", "")
@@ -32,15 +32,6 @@ object FindHottestItemsAndPopularMerchants {
     }
     else{
       return ""
-    }
-  }
-
-  def getSellerPairs(youngActionUsers:RDD[String], userSellerPair: (String, String)): (String, Int) = {
-    if(youngActionUsers.filter(user => user == userSellerPair._1).count() != 0){
-      return (userSellerPair._2, 1)
-    }
-    else{
-      return ("", 1)
     }
   }
 
@@ -59,7 +50,7 @@ object FindHottestItemsAndPopularMerchants {
     
     //统计最热门商品
     val itemPairs = log.map(log => getActionItems(log)).map((_, 1)).filter{case (key, value) => key != ""}.reduceByKey(_+_)
-    val sortedItemPairs = itemPairs.map(log =>(log._2,log._1)).sortByKey(false).map(log =>(log._2,log._1)).take(100)
+    val sortedItemPairs = itemPairs.map(itemPair =>(itemPair._2,itemPair._1)).sortByKey(false).map(itemPair =>(itemPair._2,itemPair._1)).take(100)
     
     val sortedItems = sc.parallelize(sortedItemPairs)//将数组转化为RDD
     val formatedSortedItems = sortedItems.map{case (key, value) => ("item_id="+key, "添加购物⻋+购买+添加收藏夹="+value)}
@@ -68,12 +59,15 @@ object FindHottestItemsAndPopularMerchants {
 
     //统计最受年轻人(age<30)关注的商家
     val youngUsers = info.map(info => getAgeUsers(info)).filter(user => user != "")
-    val sellerPairs = log.map(log => getActionUserSellerPairs(log)).filter{case (key, value) => key != ""}
-    val youngActionUsers = youngUsers.intersection(sellerPairs.keys).distinct()//符合actionType的年轻人
+    val actionUserSellerPairs = log.map(log => getActionUserSellerPairs(log)).filter{case (key, value) => key != ""}
+    val youngActionUsers = youngUsers.intersection(actionUserSellerPairs.keys).distinct().map((_,"hh"))//符合actionType的年轻人
 
-    val sellers = sellerPairs.foreach(getSellerPairs(youngActionUsers, _))//.filter{case (key, value) => key != ""}.reduceByKey(_+_)
-    // val sellers = sellerPairs.map(sellerPairs => (sellerPairs._2, 1) if youngActionUsers.filter(user => user == sellerPairs._1).count() != 0)
-    sellers.saveAsTextFile(args(1)+"/popular merchants among young")
+    val sellerPairs = youngActionUsers.join(actionUserSellerPairs).map{case (key, value) => (value._2, 1)}.reduceByKey(_+_)
+    val sortedSellerPairs = sellerPairs.map(sellerPair =>(sellerPair._2,sellerPair._1)).sortByKey(false).map(sellerPair =>(sellerPair._2,sellerPair._1)).take(100)
+    val sortedSellers = sc.parallelize(sortedSellerPairs)
+    val formatedSortedSellers = sortedSellers.map{case (key, value) => ("seller_id="+key, "添加购物⻋+购买+添加收藏夹="+value)}
+    
+    formatedSortedSellers.saveAsTextFile(args(1)+"/popular merchants among young")
     
     sc.stop()
   }
