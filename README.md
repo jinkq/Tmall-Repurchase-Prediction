@@ -39,3 +39,5 @@ spark-submit --class "FindHottestItemsAndPopularMerchants" --master local target
 ssh -N -f -L 30179:localhost:30179 root@210.28.133.13 -p 20576
 
 spark-submit --class "FindGenderRatioAndAgeRangeRatio" --master local target/scala-2.11/find-gender-ratio-and-age-range-ratio_2.11-1.0.jar input_test output
+
+spark-submit --class "FindGenderRatioAndAgeRangeRatioBySQL" --master local target/scala-2.11/find-gender-ratio-and-age-range-ratio-by-sql_2.11-1.0.jar input_test output

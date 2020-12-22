@@ -1,0 +1,7 @@
+[0m[[0m[0mdebug[0m] [0m[0mPackaging /workspace/Tmall-Repurchase-Prediction/FindGenderRatioAndAgeRangeRatio/Spark SQL/target/scala-2.11/find-gender-ratio-and-age-range-ratio-by-sql_2.11-1.0.jar ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	FindGenderRatioAndAgeRangeRatioBySQL.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /workspace/Tmall-Repurchase-Prediction/FindGenderRatioAndAgeRangeRatio/Spark SQL/target/scala-2.11/classes/FindGenderRatioAndAgeRangeRatioBySQL.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	FindGenderRatioAndAgeRangeRatioBySQL$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /workspace/Tmall-Repurchase-Prediction/FindGenderRatioAndAgeRangeRatio/Spark SQL/target/scala-2.11/classes/FindGenderRatioAndAgeRangeRatioBySQL$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mDone packaging.[0m

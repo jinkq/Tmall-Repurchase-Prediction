@@ -1,7 +1,6 @@
 import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkContext._
-import org.apache.spark.rdd._
 
 
 object FindGenderRatioAndAgeRangeRatio {
@@ -44,7 +43,7 @@ object FindGenderRatioAndAgeRangeRatio {
       System.exit(1)
     }
 
-    val conf = new SparkConf().setAppName("FindHottestItems")
+    val conf = new SparkConf().setAppName("FindGenderRatioAndAgeRangeRatio")
     val sc = new SparkContext(conf)
     val line = sc.textFile(args(0))
 
