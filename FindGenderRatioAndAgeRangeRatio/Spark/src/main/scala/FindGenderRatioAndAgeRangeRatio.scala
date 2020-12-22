@@ -68,7 +68,12 @@ object FindGenderRatioAndAgeRangeRatio {
     //统计购买了商品的买家年龄段的⽐例
     val ageRangeArray = info.filter(info => (info.split(",")(1) != "0" && info.split(",")(1) != "NULL")).map(info => info.split(",")(1)).distinct()
     
-
+    var list:List
+    val list1 = List("abc","xyz")
+    val list2 = List("efg","his")
+    list = list1::list2::list
+    list_=sc.parallelize(list)
+    list_.saveAsTextFile(args(1)+"test")
     // val youngUsers = info.map(info => getAgeUsers(info)).filter(user => user != "")
     // val actionUserSellerPairs = log.map(log => getActionUserSellerPairs(log)).filter{case (key, value) => key != ""}
     // val youngActionUsers = youngUsers.intersection(actionUserSellerPairs.keys).distinct().map((_,1))//符合actionType的年轻人
