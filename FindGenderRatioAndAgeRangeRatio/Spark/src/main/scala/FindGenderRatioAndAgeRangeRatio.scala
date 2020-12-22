@@ -78,12 +78,21 @@ object FindGenderRatioAndAgeRangeRatio {
       ageRangeCountPairList = ageRangeCountPair :: ageRangeCountPairList
     }
 
+    val moreThan50List = ageRangeCountPairList.take(2)
+
+    var moreThan50:Long = 0
+    for(item <- moreThan50List){
+      moreThan50 += item._2
+    }
+
+    val newAgeRangeCountPairList = ("≥50", moreThan50) :: ageRangeCountPairList.takeRight(6)
+
     var sum:Long = 0//总人数
-    for(count <- ageRangeCountPairList){
+    for(count <- newAgeRangeCountPairList){
       sum += count._2
     }
 
-    for(count <- ageRangeCountPairList){
+    for(count <- newAgeRangeCountPairList){
       var ageRangeRatio = "年龄区间为" + count._1 + "的比例: " + String.valueOf(((count._2.toFloat / sum.toFloat).toFloat * 100).formatted("%.2f")) + "%"
       ageRangeRatioList = ageRangeRatio :: ageRangeRatioList
     }

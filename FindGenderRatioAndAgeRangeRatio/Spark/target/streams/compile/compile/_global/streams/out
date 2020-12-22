@@ -1,4 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/workspace/Tmall-Repurchase-Prediction/FindGenderRatioAndAgeRangeRatio/Spark/src/main/scala/FindGenderRatioAndAgeRangeRatio.scala:107:50: value toFloat is not a member of (String, Long)[0m
-[0m[[0m[31merror[0m] [0m[0m      var ageRangeRatio = String.valueOf(((count.toFloat / sum.toFloat).toFloat * 100).formatted("%.2f")) + "%"[0m
-[0m[[0m[31merror[0m] [0m[0m                                                 ^[0m
+[0m[[0m[31merror[0m] [0m[0m/workspace/Tmall-Repurchase-Prediction/FindGenderRatioAndAgeRangeRatio/Spark/src/main/scala/FindGenderRatioAndAgeRangeRatio.scala:81:48: value takeLeft is not a member of List[(String, Long)][0m
+[0m[[0m[31merror[0m] [0m[0m    val moreThan50List = ageRangeCountPairList.takeLeft(2)[0m
+[0m[[0m[31merror[0m] [0m[0m                                               ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m
