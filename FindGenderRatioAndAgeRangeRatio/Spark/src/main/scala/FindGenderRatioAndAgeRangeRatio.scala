@@ -67,41 +67,30 @@ object FindGenderRatioAndAgeRangeRatio {
     genderCount.saveAsTextFile(args(1) + "/gender")
 
     //统计购买了商品的买家年龄段的⽐例
-    // val validAgeRange = Array("1", "2", "3", "4", "5", "6", "7", "8")
     val validAgeRangeArray = Array(("<18", "1"), ("[18, 24]", "2"), ("[25, 29]", "3"), ("[30, 34]", "4"), ("[35, 39]", "5"), ("[40, 49]", "6"), ("≥50", "7"), ("≥50", "8"))
     
-    // val ageRangeArray = info.filter(info => (validAgeRange contains info.split(",")(1))).map(info => info.split(",")(1)).distinct().collect()
-
-    var list:List[String]=List()
+    var ageRangeCountPairList:List[(String, Long)]=List()
+    var ageRangeRatioList:List[String]=List()
 
     for(ageRange <- validAgeRangeArray){
       val ageUsers = info.map(info => getAgeUsers(info, ageRange._2)).map((_, 1)).filter{case (key, value) => key != ""}
       val ageBuyUsers = ageUsers.join(buyUsers).keys
-      // val ageBuyUserCountPair = "Age Range = " + String.valueOf(ageRange)+": " + String.valueOf(ageBuyUsers.count())
-      val ageBuyUserCountPair = "年龄区间" + String.valueOf(ageRange._1) + ": " + String.valueOf(ageBuyUsers.count())
-      // val ageBuyUserCountPairs = ageBuyUsers.map(ageBuyUser => (ageRange, ageBuyUsers.count()))
-      // val formattedAgeBuyUserCountPairs = ageBuyUserCountPairs.map(ageBuyUserCountPair => "Age Range = " + String.valueOf(ageBuyUserCountPair._1)+": "+String.valueOf(ageBuyUserCountPair._2))
-      // val ageBuyUsersCount = "Age Range = " + String.valueOf(ageRange)+": " + String.valueOf(ageUsers.join(buyUsers).keys.count())
-      list = ageBuyUserCountPair :: list
+      val ageRangeCountPair = (ageRange._1, ageBuyUsers.count())
+      ageRangeCountPairList = ageRangeCountPair :: ageRangeCountPairList
     }
 
-    // for(i <- list){
-    //   println(i)
-    //   println("\n")
-    // }
-    
-    val list3=sc.parallelize(list.reverse)
-    list3.saveAsTextFile(args(1)+"/age range")
-    // val youngUsers = info.map(info => getAgeUsers(info)).filter(user => user != "")
-    // val actionUserSellerPairs = log.map(log => getActionUserSellerPairs(log)).filter{case (key, value) => key != ""}
-    // val youngActionUsers = youngUsers.intersection(actionUserSellerPairs.keys).distinct().map((_,1))//符合actionType的年轻人
+    var sum:Long = 0//总人数
+    for(count <- ageRangeCountPairList){
+      sum += count._2
+    }
 
-    // val sellerPairs = youngActionUsers.join(actionUserSellerPairs).map{case (key, value) => (value._2, 1)}.reduceByKey(_+_)
-    // val sortedSellerPairs = sellerPairs.map(sellerPair =>(sellerPair._2,sellerPair._1)).sortByKey(false).map(sellerPair =>(sellerPair._2,sellerPair._1)).take(100)
-    // val sortedSellers = sc.parallelize(sortedSellerPairs)
-    // val formatedSortedSellers = sortedSellers.map{case (key, value) => ("seller_id="+key, "添加购物⻋+购买+添加收藏夹="+value)}
+    for(count <- ageRangeCountPairList){
+      var ageRangeRatio = "年龄区间为" + count._1 + "的比例: " + String.valueOf(((count._2.toFloat / sum.toFloat).toFloat * 100).formatted("%.2f")) + "%"
+      ageRangeRatioList = ageRangeRatio :: ageRangeRatioList
+    }
     
-    // formatedSortedSellers.saveAsTextFile(args(1)+"/popular merchants among young")
+    val ageRangeRatioRdd = sc.parallelize(ageRangeRatioList)
+    ageRangeRatioRdd.saveAsTextFile(args(1)+"/age range")
     
     sc.stop()
   }
