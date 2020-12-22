@@ -72,26 +72,29 @@ object FindGenderRatioAndAgeRangeRatio {
     
     // val ageRangeArray = info.filter(info => (validAgeRange contains info.split(",")(1))).map(info => info.split(",")(1)).distinct().collect()
 
-    var list:List[String]=List()
+    var ageRangeCountList:List[Long]=List()
+    var ageRangeCountStrList:List[String]=List()
 
     for(ageRange <- validAgeRangeArray){
       val ageUsers = info.map(info => getAgeUsers(info, ageRange._2)).map((_, 1)).filter{case (key, value) => key != ""}
       val ageBuyUsers = ageUsers.join(buyUsers).keys
-      // val ageBuyUserCountPair = "Age Range = " + String.valueOf(ageRange)+": " + String.valueOf(ageBuyUsers.count())
       val ageBuyUserCountPair = "年龄区间" + String.valueOf(ageRange._1) + ": " + String.valueOf(ageBuyUsers.count())
-      // val ageBuyUserCountPairs = ageBuyUsers.map(ageBuyUser => (ageRange, ageBuyUsers.count()))
-      // val formattedAgeBuyUserCountPairs = ageBuyUserCountPairs.map(ageBuyUserCountPair => "Age Range = " + String.valueOf(ageBuyUserCountPair._1)+": "+String.valueOf(ageBuyUserCountPair._2))
-      // val ageBuyUsersCount = "Age Range = " + String.valueOf(ageRange)+": " + String.valueOf(ageUsers.join(buyUsers).keys.count())
-      list = ageBuyUserCountPair :: list
+      val ageRangeCount = ageBuyUsers.count()
+      ageRangeCountList = ageBuyUserCountPair :: ageRangeCountList
     }
 
-    // for(i <- list){
-    //   println(i)
-    //   println("\n")
-    // }
+    var sum = 0
+    for(ageRangeCount <- ageRangeCountList){
+      sum += ageRangeCount
+    }
+
+    for(i <- ageRangeCountList.length){
+      var ageRangeRatio = ageRangeCountList(i) / sum
+      ageRangeCountStrList = ageRangeRatio :: ageRangeCountStrList
+    }
     
-    val list3=sc.parallelize(list.reverse)
-    list3.saveAsTextFile(args(1)+"/age range")
+    ageRangeCountStrList = sc.parallelize(ageRangeCountStrList.reverse)
+    ageRangeCountStrList.saveAsTextFile(args(1)+"/age range")
     // val youngUsers = info.map(info => getAgeUsers(info)).filter(user => user != "")
     // val actionUserSellerPairs = log.map(log => getActionUserSellerPairs(log)).filter{case (key, value) => key != ""}
     // val youngActionUsers = youngUsers.intersection(actionUserSellerPairs.keys).distinct().map((_,1))//符合actionType的年轻人
