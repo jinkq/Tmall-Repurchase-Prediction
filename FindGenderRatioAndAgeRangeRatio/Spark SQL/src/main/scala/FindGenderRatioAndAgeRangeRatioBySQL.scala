@@ -23,7 +23,7 @@ object FindGenderRatioAndAgeRangeRatioBySQL {
     
     val joinExpression = infoDf.col("user_id") === logDf.col("user_id")
     val infoLogDf = infoDf.join(logDf, joinExpression)
-    infoLogDf.show()
+    // infoLogDf.show()
 
     //统计购买了商品的男女比例
     val maleDf = infoLogDf.where("gender = \"1\" and action_type = \"2\"").dropDuplicates("user_id")
@@ -32,7 +32,10 @@ object FindGenderRatioAndAgeRangeRatioBySQL {
     val femaleCount = femaleDf.count().toFloat
     val maleRatio = (maleCount / (maleCount + femaleCount)) * 100
     val femaleRatio = (femaleCount / (maleCount + femaleCount)) * 100
-    val genderRatio = sc.parallelize(Seq("购买了商品的男性比例："+String.valueOf(maleRatio.formatted("%.2f"))+"%", "购买了商品的女性比例："+String.valueOf(femaleRatio.formatted("%.2f"))+"%"))
+
+    val maleStr = "购买了商品的男性人数：" + String.valueOf(maleCount.toLong) + "，比例："+String.valueOf(maleRatio.formatted("%.2f"))+"%"
+    val femaleStr = "购买了商品的女性人数：" + String.valueOf(femaleCount.toLong) + "，比例："+String.valueOf(femaleRatio.formatted("%.2f"))+"%"
+    val genderRatio = sc.parallelize(Seq(maleStr, femaleStr))
 
     genderRatio.saveAsTextFile(args(1) + "/gender")
 
@@ -44,8 +47,7 @@ object FindGenderRatioAndAgeRangeRatioBySQL {
 
     for(ageRange <- validAgeRangeArray){
       val ageDf = infoLogDf.where("age_range = " + ageRange._2 + " and action_type = \"2\"").dropDuplicates("user_id")
-      val ageCount = ageDf.count()
-      val ageCountPair = (ageRange._1, ageCount)
+      val ageCountPair = (ageRange._1, ageDf.count())
       ageCountPairList = ageCountPair :: ageCountPairList
     }
 
@@ -64,7 +66,7 @@ object FindGenderRatioAndAgeRangeRatioBySQL {
     }
 
     for(count <- newAgeCountPairList){
-      var ageRangeRatio = "年龄区间为" + count._1 + "的比例: " + String.valueOf(((count._2.toFloat / sum.toFloat).toFloat * 100).formatted("%.2f")) + "%"
+      val ageRangeRatio = "年龄区间为" + count._1 + "的人数："+ String.valueOf(count._2) + "，比例：" + String.valueOf(((count._2.toFloat / sum.toFloat).toFloat * 100).formatted("%.2f")) + "%"
       ageRatioList = ageRangeRatio :: ageRatioList
     }
 

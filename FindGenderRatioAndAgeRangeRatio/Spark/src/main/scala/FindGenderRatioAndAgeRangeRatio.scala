@@ -61,9 +61,11 @@ object FindGenderRatioAndAgeRangeRatio {
     val maleBuyUsersRatio = maleBuyUsers.count()/(maleBuyUsers.count() + femaleBuyUsers.count()).toFloat * 100
     val femaleBuyUsersRatio = femaleBuyUsers.count()/(maleBuyUsers.count() + femaleBuyUsers.count()).toFloat *100
 
-    val genderCount = sc.parallelize(Seq("购买了商品的男性比例："+String.valueOf(maleBuyUsersRatio.formatted("%.2f"))+"%", "购买了商品的女性比例："+String.valueOf(femaleBuyUsersRatio.formatted("%.2f"))+"%"))
+    val maleStr = "购买了商品的男性人数：" + String.valueOf(maleBuyUsers.count()) + "，比例："+String.valueOf(maleBuyUsersRatio.formatted("%.2f"))+"%"
+    val femaleStr = "购买了商品的女性人数：" + String.valueOf(femaleBuyUsers.count()) + "，比例："+String.valueOf(femaleBuyUsersRatio.formatted("%.2f"))+"%"
+    val genderRatio = sc.parallelize(Seq(maleStr, femaleStr))
     
-    genderCount.saveAsTextFile(args(1) + "/gender")
+    genderRatio.saveAsTextFile(args(1) + "/gender")
 
     //统计购买了商品的买家年龄段的⽐例
     val validAgeRangeArray = Array(("<18", "1"), ("[18, 24]", "2"), ("[25, 29]", "3"), ("[30, 34]", "4"), ("[35, 39]", "5"), ("[40, 49]", "6"), ("≥50", "7"), ("≥50", "8"))
@@ -93,7 +95,7 @@ object FindGenderRatioAndAgeRangeRatio {
     }
 
     for(count <- newAgeRangeCountPairList){
-      var ageRangeRatio = "年龄区间为" + count._1 + "的比例: " + String.valueOf(((count._2.toFloat / sum.toFloat).toFloat * 100).formatted("%.2f")) + "%"
+      val ageRangeRatio = "年龄区间为" + count._1 + "的人数："+ String.valueOf(count._2) + "，比例：" + String.valueOf(((count._2.toFloat / sum.toFloat).toFloat * 100).formatted("%.2f")) + "%"
       ageRangeRatioList = ageRangeRatio :: ageRangeRatioList
     }
     
