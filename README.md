@@ -36,7 +36,7 @@ spark-submit --class "FindHottestItemsAndPopularMerchants" --master spark://jkq1
 
 spark-submit --class "FindHottestItemsAndPopularMerchants" --master local target/scala-2.11/find-hottest-items-and-popular-merchants_2.11-1.0.jar input_test output
 
-ssh -N -f -L 30179:localhost:30179 root@210.28.133.13 -p 20576
+ssh -N -f -L 32224:localhost:32224 root@210.28.133.13 -p 20576
 
 spark-submit --class "FindGenderRatioAndAgeRangeRatio" --master local target/scala-2.11/find-gender-ratio-and-age-range-ratio_2.11-1.0.jar input_test output
 
