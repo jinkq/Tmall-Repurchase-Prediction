@@ -49,12 +49,21 @@ object FindGenderRatioAndAgeRangeRatioBySQL {
       ageCountPairList = ageCountPair :: ageCountPairList
     }
 
+    val moreThan50List = ageCountPairList.take(2)
+
+    var moreThan50:Long = 0
+    for(item <- moreThan50List){
+      moreThan50 += item._2
+    }
+
+    val newAgeCountPairList = ("≥50", moreThan50) :: ageCountPairList.takeRight(6)
+
     var sum:Long = 0
-    for(count <- ageCountPairList){
+    for(count <- newAgeCountPairList){
       sum += count._2
     }
 
-    for(count <- ageCountPairList){
+    for(count <- newAgeCountPairList){
       var ageRangeRatio = "年龄区间为" + count._1 + "的比例: " + String.valueOf(((count._2.toFloat / sum.toFloat).toFloat * 100).formatted("%.2f")) + "%"
       ageRatioList = ageRangeRatio :: ageRatioList
     }
