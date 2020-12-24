@@ -6,7 +6,7 @@ import org.apache.spark.SparkContext._
 object FindGenderRatioAndAgeRangeRatio {
   def getBuyUsers(line: String): String = { //获得双十一当天购买了商品的user
     val words = line.split(",")
-    if(String.valueOf(words(5)) == "1111" && words(6) == "2"){ //购买
+    if((String.valueOf(words(5)) == "1111") && (words(6) == "2")){ //购买
       return (words(0))
     }
     else{

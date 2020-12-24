@@ -31,13 +31,13 @@ public class FindPopularMerchantsAmongYoung{
                 String userID = line[0];
 
                 if(line.length==7){//user log
-                    if(!(line[0].equals("user_id")) && !(line[3].equals("seller_id")) && !(line[6].equals("0") )){
+                    if(line[5].equals("1111") && !(line[0].equals("user_id")) && !(line[3].equals("seller_id")) && !(line[6].equals("0") )){
                         userLog.setSellerID(line[3]);
                         context.write(new Text(userID), userLog);
                     }
                 }
                 else if(line.length==3){//user info
-                    if(!(line[0].equals("user_id")) &&  (line[1].equals("1") || line[1].equals("2") || line[1].equals("3")) ){
+                    if(line[5].equals("1111") && !(line[0].equals("user_id")) &&  (line[1].equals("1") || line[1].equals("2") || line[1].equals("3")) ){
                         userLog.setUserAge(true);
                         context.write(new Text(userID), userLog);
                     }
