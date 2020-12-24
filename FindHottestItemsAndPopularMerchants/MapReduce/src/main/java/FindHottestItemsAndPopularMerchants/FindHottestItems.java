@@ -26,7 +26,7 @@ public class FindHottestItems{
         public void map(Object key, Text value, Context context
                     ) throws IOException, InterruptedException {
             String[] line = value.toString().split(",");
-            if(line[1].length() != 0 && !(line[1].equals("item_id")) && line[6].length() != 0 && !(line[6].equals("0") ))
+            if(line[1].length() != 0 && !(line[1].equals("item_id")) && line[5].equals("1111") && line[6].length() != 0 && !(line[6].equals("0") ))
                 context.write(new Text(line[1]), one);
         }
     }

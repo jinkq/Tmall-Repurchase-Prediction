@@ -4,9 +4,9 @@ import org.apache.spark.SparkContext._
 
 
 object FindHottestItemsAndPopularMerchants {
-  def getActionItems(line: String): String = { //获得action_type符合要求的items
+  def getActionItems(line: String): String = { //获得双十一当天action_type符合要求的items
     val words = line.split(",")
-    if(words(6) == "1" || words(6) == "2" || words(6) == "3"){ //添加购物⻋、购买、添加收藏夹
+    if(words(5) == "1111" && (words(6) == "1" || words(6) == "2" || words(6) == "3")){ //添加购物⻋、购买、添加收藏夹
       return words(1)
     }
     else{
