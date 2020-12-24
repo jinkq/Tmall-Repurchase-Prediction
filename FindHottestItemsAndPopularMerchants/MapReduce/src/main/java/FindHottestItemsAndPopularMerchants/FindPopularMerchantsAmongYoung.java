@@ -37,7 +37,7 @@ public class FindPopularMerchantsAmongYoung{
                     }
                 }
                 else if(line.length==3){//user info
-                    if(line[5].equals("1111") && !(line[0].equals("user_id")) &&  (line[1].equals("1") || line[1].equals("2") || line[1].equals("3")) ){
+                    if(!(line[0].equals("user_id")) &&  (line[1].equals("1") || line[1].equals("2") || line[1].equals("3")) ){
                         userLog.setUserAge(true);
                         context.write(new Text(userID), userLog);
                     }
