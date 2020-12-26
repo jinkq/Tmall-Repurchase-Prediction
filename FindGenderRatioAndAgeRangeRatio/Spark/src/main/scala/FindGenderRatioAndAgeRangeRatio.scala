@@ -4,16 +4,6 @@ import org.apache.spark.SparkContext._
 
 
 object FindGenderRatioAndAgeRangeRatio {
-  def getBuyUsers(line: String): String = { //获得双十一当天购买了商品的user
-    val words = line.split(",")
-    if((String.valueOf(words(5)) == "1111") && (words(6) == "2")){ //购买
-      return (words(0))
-    }
-    else{
-      return ("")
-    }
-  }
-
   def getGenderUsers(line: String, gender: String): String = { //获得男users
     val words = line.split(",")
     if(gender == "male" && words(2) == "1"){
@@ -48,13 +38,13 @@ object FindGenderRatioAndAgeRangeRatio {
     val line = sc.textFile(args(0))
 
     val info = line.filter(x => x.split(",").length==3)//来自info表
-    val log = line.filter(x => x.split(",").length==7)//来自log表
+    val log = line.filter(x => x.split(",").length==7).filter(x => (x.split(",")(5) == "1111")&&(x.split(",")(6)=="2"))//来自log表
     
     //统计购买了商品的男女比例
     val maleUsers = info.map(info => getGenderUsers(info, "male")).map((_, 1)).filter{case (key, value) => key != ""}
     val femaleUsers = info.map(info => getGenderUsers(info, "female")).map((_, 1)).filter{case (key, value) => key != ""}
     
-    val buyUsers = log.map(log => getBuyUsers(log)).filter(user => user != "").distinct().map((_, 1))
+    val buyUsers = log.map(log => log.split(",")(0)).filter(user => user != "").distinct().map((_, 1))
     val maleBuyUsers = maleUsers.join(buyUsers).keys
     val femaleBuyUsers = femaleUsers.join(buyUsers).keys
 

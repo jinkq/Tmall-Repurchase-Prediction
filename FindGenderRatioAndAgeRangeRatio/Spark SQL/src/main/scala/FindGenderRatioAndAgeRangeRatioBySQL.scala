@@ -23,12 +23,12 @@ object FindGenderRatioAndAgeRangeRatioBySQL {
     
     val joinExpression = infoDf.col("user_id") === logDf.col("user_id")
     val infoLogDf = infoDf.join(logDf, joinExpression)
-    // infoLogDf.show()
+    //infoLogDf.show()
 
     //统计购买了商品的男女比例
-    val maleDf = infoLogDf.where("gender = \"1\" and action_type = \"2\"").dropDuplicates("user_id")
+    val maleDf = infoLogDf.where("gender = \"1\" and action_type = \"2\" and time_stamp = \"1111\"").dropDuplicates("user_id")
     val maleCount = maleDf.count().toFloat
-    val femaleDf = infoLogDf.where("gender = \"0\" and action_type = \"2\"").dropDuplicates("user_id")
+    val femaleDf = infoLogDf.where("gender = \"0\" and action_type = \"2\" and time_stamp = \"1111\"").dropDuplicates("user_id")
     val femaleCount = femaleDf.count().toFloat
     val maleRatio = (maleCount / (maleCount + femaleCount)) * 100
     val femaleRatio = (femaleCount / (maleCount + femaleCount)) * 100
@@ -46,7 +46,7 @@ object FindGenderRatioAndAgeRangeRatioBySQL {
     var ageRatioList:List[String]=List()
 
     for(ageRange <- validAgeRangeArray){
-      val ageDf = infoLogDf.where("age_range = " + ageRange._2 + " and action_type = \"2\"").dropDuplicates("user_id")
+      val ageDf = infoLogDf.where("age_range = " + ageRange._2 + " and action_type = \"2\" and time_stamp = \"1111\"").dropDuplicates("user_id")
       val ageCountPair = (ageRange._1, ageDf.count())
       ageCountPairList = ageCountPair :: ageCountPairList
     }
