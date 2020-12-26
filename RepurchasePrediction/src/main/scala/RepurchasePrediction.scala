@@ -39,9 +39,9 @@ object RepurchasePrediction {
     val sc = new SparkContext(conf)
     val train = sc.textFile(args(0))
 
-    val trainDf = train.map(_.split(",")).map { r => val trimmed = r.map(_.replaceAll("\"", "")) val label = trimmed(r.size - 1).toInt val features = trimmed.slice(4, r.size - 1).map(d => if (d == "?") 0.0 else d.toDouble) LabeledPoint(label, Vectors.dense(features)) } data.cache
+    //val trainDf = train.map(_.split(",")).map { r => val trimmed = r.map(_.replaceAll("\"", "")) val label = trimmed(r.size - 1).toInt val features = trimmed.slice(4, r.size - 1).map(d => if (d == "?") 0.0 else d.toDouble) LabeledPoint(label, Vectors.dense(features)) } data.cache
 
-    val numData = trainDf.count
+    //val numData = trainDf.count
     
     sc.stop()
   }

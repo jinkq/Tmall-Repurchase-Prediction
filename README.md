@@ -30,18 +30,12 @@
 * \<output>将含文件夹hottest items和popular merchants among young，分别存储双十一最热门的商品和最受年轻人(age<30)关注的商家
 ### Spark
 
+## 2. 统计双⼗⼀购买了商品的男女⽐例，以及购买了商品的买家年龄段的比例
+### Spark
 
-#### 运行方法
-spark-submit --class "FindHottestItemsAndPopularMerchants" --master spark://jkq181098118-master:7077 target/scala-2.11/find-hottest-items-and-popular-merchants_2.11-1.0.jar hdfs://jkq181098118-master:9000/user/root/input_test/test.txt hdfs://jkq181098118-master:9000/user/root/output
+### Spark SQL
 
-spark-submit --class "FindHottestItemsAndPopularMerchants" --master local target/scala-2.11/find-hottest-items-and-popular-merchants_2.11-1.0.jar input_test output
+## 3. MLlib预测新消费者在6个月内再次购买的概率
 
-ssh -N -f -L 32224:localhost:32224 root@210.28.133.13 -p 20576
 
-spark-submit --class "FindGenderRatioAndAgeRangeRatio" --master local target/scala-2.11/find-gender-ratio-and-age-range-ratio_2.11-1.0.jar input_test output
 
-spark-submit --class "FindGenderRatioAndAgeRangeRatioBySQL" --master local target/scala-2.11/find-gender-ratio-and-age-range-ratio-by-sql_2.11-1.0.jar input_test output
-
-spark-submit --class "FindGenderRatioAndAgeRangeRatioBySQL" --master spark://jkq181098118-master:7077 target/scala-2.11/find-gender-ratio-and-age-range-ratio-by-sql_2.11-1.0.jar hdfs://jkq181098118-master:9000/user/root/input hdfs://jkq181098118-master:9000/user/root/output
-
-libraryDependencies += "org.apache.spark" %% "spark-mllib" % "2.4.0"
