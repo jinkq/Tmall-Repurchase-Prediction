@@ -43,3 +43,5 @@ spark-submit --class "FindGenderRatioAndAgeRangeRatio" --master local target/sca
 spark-submit --class "FindGenderRatioAndAgeRangeRatioBySQL" --master local target/scala-2.11/find-gender-ratio-and-age-range-ratio-by-sql_2.11-1.0.jar input_test output
 
 spark-submit --class "FindGenderRatioAndAgeRangeRatioBySQL" --master spark://jkq181098118-master:7077 target/scala-2.11/find-gender-ratio-and-age-range-ratio-by-sql_2.11-1.0.jar hdfs://jkq181098118-master:9000/user/root/input hdfs://jkq181098118-master:9000/user/root/output
+
+libraryDependencies += "org.apache.spark" %% "spark-mllib" % "2.4.0"

@@ -1,6 +1,0 @@
-FindHottestItems.class
-FindHottestItemsAndPopularMerchants.class
-FindHottestItems$IntSumReducer.class
-FindHottestItems$SortReducer.class
-FindHottestItems$IntWritableDecreasingComparator.class
-FindHottestItems$measureItemsPopularityMapper.class

@@ -1,0 +1,7 @@
+[0m[[0m[31merror[0m] [0m[0mC:\Users\11546\Desktop\FBDP\lab\lab4\Tmall-Repurchase-Prediction\RepurchasePrediction\src\main\scala\RepurchasePrediction.scala:42:98: ';' expected but 'val' found.[0m
+[0m[[0m[31merror[0m] [0m[0m    val trainDf = train.map(_.split(",")).map { r => val trimmed = r.map(_.replaceAll("\"", "")) val label = trimmed(r.size - 1).toInt val features = trimmed.slice(4, r.size - 1).map(d => if (d == "?") 0.0 else d.toDouble) LabeledPoint(label, Vectors.dense(features)) } data.cache[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                                                 ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\11546\Desktop\FBDP\lab\lab4\Tmall-Repurchase-Prediction\RepurchasePrediction\src\main\scala\RepurchasePrediction.scala:42:275: ';' expected but '.' found.[0m
+[0m[[0m[31merror[0m] [0m[0m    val trainDf = train.map(_.split(",")).map { r => val trimmed = r.map(_.replaceAll("\"", "")) val label = trimmed(r.size - 1).toInt val features = trimmed.slice(4, r.size - 1).map(d => if (d == "?") 0.0 else d.toDouble) LabeledPoint(label, Vectors.dense(features)) } data.cache[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                                                                                                                                                                                                                                  ^[0m
+[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
