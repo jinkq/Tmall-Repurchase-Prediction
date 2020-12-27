@@ -162,9 +162,11 @@
 
 ##### 模型的训练与预测
 
+* 按照8:2的比例将数据划分为训练集和测试集
+
 * 使用MLlib中的LogisticRegressionWithSGD进行分类
 
-* 在预测前执行`lrModel.clearThreshold()`可以获得分类概率，而非获得类别标签
+* (在预测前执行`lrModel.clearThreshold()`可以获得分类概率，而非获得类别标签)
 
 ##### 模型评价
 
