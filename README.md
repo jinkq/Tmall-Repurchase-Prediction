@@ -171,6 +171,7 @@
 ##### 模型评价
 
 * 准确率：94.12%
+![](https://finclaw.oss-cn-shenzhen.aliyuncs.com/img/acc.PNG)
 
 #### 运行方法
 
