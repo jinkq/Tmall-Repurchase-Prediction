@@ -6,6 +6,11 @@
 3. 基于Hive或者Spark SQL查询双十一购买了商品的男女比例，以及购买了商品的买家年龄段的比例；
 4. 预测给定的商家中，哪些新消费者在未来会成为忠实客户，即需要预测这些新消费者在6个月内再次购买的概率。基于Spark MLlib编写程序预测回头客，评估实验结果的准确率。
 
+## 文件夹目录
+* FindHottestItemsAndPopularMerchants：任务1
+* FindGenderRatioAndAgeRangeRatio：任务2、3
+* RepurchasePrediction：任务4
+
 ## 说明
 
 * MapReduce使用Java语言，用Maven管理
@@ -165,6 +170,12 @@
 
 * 准确率：
 
+#### 运行方法
+
+`spark-submit --class "RepurchasePrediction" --master local <repurchase-prediction_2.11-1.0.jar路径> <input>`
+
+* \<input>为data_format1文件夹路径
+
 ## 实验中遇到的问题
 
 1. 在bdkit中遇到进入其他同学控制台的情况，并且发现错乱时按Ctrl+L可以在我自己和其他同学的控制台间进行切换
@@ -175,5 +186,5 @@
 
    换过源依然几千秒都没update完，后来发现居然是因为宿舍校园网太慢了，换个网络就成功了
 
-
+3. 任务2、3一开始我没有筛选双十一当天，但得到的性别、年龄段人数都与筛选过双十一当天得到的结果完全一样。一开始我以为有bug，但是在多番测试后发现结果确实是一样的，我能想到的解释就是所有在双十一买了东西的人都在双十一前6个月买过东西。
 
