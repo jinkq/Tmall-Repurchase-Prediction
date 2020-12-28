@@ -119,8 +119,10 @@ object RepurchasePrediction {
       actionDf = actionDf.drop("flag")
     }
     actionDf = actionDf.drop("count").drop("action_type")
-    infoLogDf = infoLogDf.join(actionDf, infoLogDf("user_id") === actionDf("user_id") && infoLogDf("merchant_id") === actionDf("seller_id"), "left").drop(actionDf("user_id")).drop(actionDf("seller_id"))
+    val actionFeatureDf = actionDf.groupBy(actionDf("user_id"),actionDf("seller_id")).sum()
 
+    infoLogDf = infoLogDf.join(actionFeatureDf, infoLogDf("user_id") === actionFeatureDf("user_id") && infoLogDf("merchant_id") === actionFeatureDf("seller_id"), "left").drop(actionFeatureDf("user_id")).drop(actionFeatureDf("seller_id"))
+ 
 //    infoLogDf.repartition(1).write.format("com.databricks.spark.csv")
 //      .option("header", "true")//在csv第一行有属性"true"，没有就是"false"
 //      .option("delimiter",",")//默认以","分割
