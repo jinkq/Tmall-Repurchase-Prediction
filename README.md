@@ -116,9 +116,15 @@
 
 ## 4. MLlib预测新消费者在6个月内再次购买的概率
 
-#### 输入
+#### 文件夹目录
 
-* 输入：data_format1文件夹
+* src
+  * `GetFeatures.scala`：读取data_format1文件夹中的数据，并对train_format1.csv和test_format1做特征工程，处理完的数据在processed_data文件夹中，分别为train.csv和test.csv
+  * `TrainAndPredict.scala`：用train.csv作为训练集，预测test.csv
+  * `TrainAndTest.scala`：将train.csv按照8:2划分训练集与测试集
+* output：
+  * TrainAndPredict：test_format1.csv的预测结果
+  * TrainAndTest/accuracy：train_format1.csv划分训练集、测试集的模型准确率
 
 #### 设计思路
 
@@ -162,7 +168,9 @@
 
 ##### 模型的训练与预测
 
-* 按照8:2的比例将数据划分为训练集和测试集
+* 划分训练集与测试集
+    * 法一：按照8:2的比例将数据划分为训练集和测试集
+    * 法二：用train_format1.csv作为训练集，test_format1作为测试集
 
 * 使用MLlib中的LogisticRegressionWithSGD进行分类
 
@@ -170,14 +178,17 @@
 
 ##### 模型评价
 
-* 准确率：94.12%
-![](https://finclaw.oss-cn-shenzhen.aliyuncs.com/img/acc.PNG)
+* 法一：准确率：93.57%（迭代10次）
+* 法二：score：0.4697887（迭代3次）
 
 #### 运行方法
 
-`spark-submit --class "RepurchasePrediction" --master local <repurchase-prediction_2.11-1.0.jar路径> <input>`
+* `GetFeatures.scala`参数：<data_format1文件夹路径>
 
-* \<input>为data_format1文件夹路径
+
+* `TrainAndPredict.scala`参数：<processed_data文件夹路径> <output 路径>
+
+* `TrainAndTest.scala`：<processed_data文件夹路径> <output 路径>
 
 ## 实验中遇到的问题
 
