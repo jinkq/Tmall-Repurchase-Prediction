@@ -9,7 +9,7 @@
 ## 文件夹目录
 * FindHottestItemsAndPopularMerchants：任务1
 * FindGenderRatioAndAgeRangeRatio：任务2、3
-* RepurchasePrediction：任务4
+* RepurchasePrediction：任务4（scala代码是MLlib，Python代码是自己实现的随机森林）
 
 ## 说明
 
@@ -186,10 +186,26 @@
 #### 运行方法
 
 * `GetFeatures.scala`参数：<data_format1文件夹路径>
-
 * `TrainAndPredict.scala`参数：<processed_data文件夹路径> <output 路径>
-
 * `TrainAndTest.scala`：<processed_data文件夹路径> <output 路径>
+
+#### 参加天池比赛
+
+由于MLlib中的模型比较基础，效果不太理想，因此自己重新用Python实现了一个随机森林分类器（基决策树是调用sklearn的，但随机森林框架是自己写的）
+
+* 基决策树个数：500（更多或更少基决策树，score会下降）
+
+##### 设计思路
+
+每颗基决策树的训练集样本和特征都是随机的，最后用bagging的方式进行投票。
+
+![](https://finclaw.oss-cn-shenzhen.aliyuncs.com/img/%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97.PNG)
+
+##### 模型评价
+
+采用5折交叉验证，AUC约为0.78，score为0.60，排名449。
+
+![](https://finclaw.oss-cn-shenzhen.aliyuncs.com/img/score.PNG)
 
 ## 实验中遇到的问题
 
