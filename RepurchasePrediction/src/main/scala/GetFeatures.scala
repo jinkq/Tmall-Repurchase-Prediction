@@ -68,8 +68,8 @@ object GetFeatures {
   }
 
   def main(args: Array[String]) {
-   if (args.length < 2) {
-     System.err.println("Usage: <input path> <output path>")
+   if (args.length < 1) {
+     System.err.println("Usage: <input path>")
      System.exit(1)
    }
 

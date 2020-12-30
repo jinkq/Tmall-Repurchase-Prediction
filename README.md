@@ -168,6 +168,8 @@
 
 ##### 模型的训练与预测
 
+* 年龄缺失值用均值（取整）填充，性别缺失值用众数填充
+
 * 划分训练集与测试集
     * 法一：按照8:2的比例将数据划分为训练集和测试集
     * 法二：用train_format1.csv作为训练集，test_format1作为测试集
@@ -184,7 +186,6 @@
 #### 运行方法
 
 * `GetFeatures.scala`参数：<data_format1文件夹路径>
-
 
 * `TrainAndPredict.scala`参数：<processed_data文件夹路径> <output 路径>
 
